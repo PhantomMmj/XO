@@ -1,0 +1,32 @@
+win_state = False
+counter = 0
+playing_field = list(range(1, 10))
+all_win_coords = ([1, 2, 3], [1, 5, 9], [1, 4, 7], [3, 6, 9], [7, 8, 9], [3, 5, 7], [2, 5, 8], [4, 5, 6])
+    
+while not win_state:
+    valid = False
+    for i in range(1, 10, 3):
+        print(f"{playing_field[i-1]} | {playing_field[i]} | {playing_field[i+1]} ") 
+    if counter % 2: 
+        player = "O" 
+    else:
+        player = "X"
+    counter += 1
+    if counter > 9:
+        print("Ничья!")
+        break
+    print(f"Ходит игрок {player}")
+    while not valid:
+        position = int(input("куда хотите поставить? "))
+        if str(playing_field[position-1]) in "OX":
+            print("эта клетка уже занята, попробуйте другую") 
+        else:
+            valid = True
+            playing_field[position-1] = player 
+    if counter > 4:
+        for win_coords in all_win_coords:
+            if playing_field[win_coords[0]-1] == playing_field[win_coords[1]-1] == playing_field[win_coords[2]-1] :
+                win_state = True
+                print(f"игрок {player} вы победили!")
+    
+    
