@@ -1,0 +1,28 @@
+from PIL import Image
+import os
+
+photo_paths = ["photo_0.jpg", "photo_1.jpg", "photo_2.jpg", "photo_3.jpg", "photo_4.jpg"]
+
+for number in range(5):
+    folder_name = f"photo_end_{number}"
+    if not os.path.exists(folder_name):
+        os.makedirs(folder_name)
+
+for i, photo_path in enumerate(photo_paths):
+    image = Image.open(photo_path)
+
+    print(f"Цветовая модель изображения: {image.mode}")
+    print(f"Размер изображения: {image.width}, {image.height}")
+    print(f"Формат изображения: {image.format}")
+
+    folder_name = f"photo_end_{i}"
+
+    vk_image = image.resize((1400, 1000))
+    vk_image.save(os.path.join(folder_name, f"{os.path.splitext(os.path.basename(photo_path))[0]}_vk.png"), "PNG")
+
+    insta_image = image.resize((1800, 1800))
+    insta_image = insta_image.crop((10, 0, insta_image.width - 10, insta_image.height))
+    insta_image.save(os.path.join(folder_name, f"{os.path.splitext(os.path.basename(photo_path))[0]}_inst.png"), "PNG")
+
+    fb_image = image.resize((1200, 628))
+    fb_image.save(os.path.join(folder_name, f"{os.path.splitext(os.path.basename(photo_path))[0]}_fb.png"), "PNG")
